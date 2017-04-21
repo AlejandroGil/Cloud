@@ -1,7 +1,9 @@
-#Miramos el ultimo disco
-sudo grep SCSI /var/log/messages
+# Acoplar disco a Linux
 
-/// EN UBUNTU:     sudo grep SCSI /var/log/syslog
+1. Miramos el ultimo disco
+  * sudo grep SCSI /var/log/messages
+  * EN UBUNTU
+    * sudo grep SCSI /var/log/syslog
 
 #Listar particiones
 sudo fdisk -l
