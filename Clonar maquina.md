@@ -1,6 +1,4 @@
-############################################
-############## Clonar Máquina ##############
-############################################
+#Clonar Máquina 
 
 1. Clonar discos
     - Clonar dentro de la misma suscripcion:
