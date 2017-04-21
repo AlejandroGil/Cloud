@@ -40,7 +40,6 @@ sudo chmod go+w /datadrive
 
 ### Disco remoto
 1. Añadimos una línea al fstab:
-   - (//url/almacenamiento /directorio/en/la/vm cifs vers=3.0,username={cuenta},password={pass},dir_mode=0770,file_mode=0770,uid=apache,gid=apache)
+   - //url/almacenamiento /directorio/en/la/vm cifs vers=3.0,username={cuenta},password={pass},dir_mode=0770,file_mode=0770,uid=apache,gid=apache
    - sudo vi /etc/fstab
-
-\\cervantesprostorage.file.core.windows.net\cervantespro-shared  /shared cifs vers=3.0,username=cervantesprostorage,password=GuBlPJdra6mKl2ii81tUGqxX7mMxMyEvkopJ/Qsq0txIPXLLjMlh18cS3RwnzPYF1RnOLr5p9G9ZnQEtHxNsFg==,dir_mode=0770,file_mode=0770,uid=apache,gid=apache
+      - \\cervantesprostorage.file.core.windows.net\cervantespro-shared  /shared cifs vers=3.0,username=cervantesprostorage,password=GuBlPJdra6mKl2ii81tUGqxX7mMxMyEvkopJ/Qsq0txIPXLLjMlh18cS3RwnzPYF1RnOLr5p9G9ZnQEtHxNsFg==,dir_mode=0770,file_mode=0770,uid=apache,gid=apache
