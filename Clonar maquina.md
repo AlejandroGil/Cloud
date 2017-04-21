@@ -1,7 +1,7 @@
-#Clonar Máquina 
+# Clonar Máquina 
 
 1. Clonar discos
-    - Clonar dentro de la misma suscripcion:
+- Clonar dentro de la misma suscripcion:
         Es suficiente con crear un nuevo contenedor (cloudberry) y copiar aquí los vhds
 
     - Clonar a otra suscripcion:
