@@ -5,3 +5,4 @@
 3. Renombrar
 4. Nº asociado
 5. Cambiar del directorio predet. (config->editar directorio)
+6. Editar administradores
