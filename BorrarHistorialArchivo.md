@@ -1,10 +1,10 @@
 # Borrar historial de modificación manteniendo únicamente la última versión
 
-1. Clonar repositorio con la flag --mirror
+1. Modifiar el archivo quitando el contenido sensible
+2. Clonar repositorio con la flag --mirror
     - git clone --mirror git://example.com/some-big-repo.git
     
-2. Ir a la carpeta local donde se ha clonado
-3. Modifiar el archivo quitando el contenido sensible
+3. Ir a la carpeta local donde se ha clonado 
 4. Eliminar fichero conservando la última versión
     - bfg --delete-files <fileName.extension> <git repo name>.git
 5. cd <repo name>.git
