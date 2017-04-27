@@ -1,4 +1,4 @@
-# Borrar archivo e historial de modificación
+# Borrar historial de modificación manteniendo únicamente la última versión
 
 1. Clonar repositorio con la flag --mirror
     - git clone --mirror git://example.com/some-big-repo.git
