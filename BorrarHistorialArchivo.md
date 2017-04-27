@@ -1,5 +1,7 @@
 # Borrar historial de modificación manteniendo únicamente la última versión
 
+### Desde GitShell
+
 1. Modifiar el archivo quitando el contenido sensible
 2. Clonar repositorio con la flag --mirror
     - git clone --mirror git://example.com/some-big-repo.git
