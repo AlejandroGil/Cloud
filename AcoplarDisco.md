@@ -44,6 +44,6 @@
    - sudo vi /etc/fstab
       - \\cervantesprostorage.file.core.windows.net\cervantespro-shared  /shared cifs vers=3.0,username=,password=,dir_mode=0770,file_mode=0770,uid=apache,gid=apache
       
-# Acoplar disco a Linux
+# Acoplar disco a Windows
  - [Linux](../master/Acoplar%20disco%20a%20linux.txt)
  - [Windows](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-attach-disk-portal)
