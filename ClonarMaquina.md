@@ -31,5 +31,5 @@ Habrá que reiniciar la máquina para que pille los cambios.
 		$ sudo userdel admintemp
 
 5. Montar disco de datos
-    - [Linux](../master/Acoplar%20disco%20a%20linux.txt)
+    - [Linux](../master/AcoplarDisco.md)
     - [Windows](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-attach-disk-portal)
