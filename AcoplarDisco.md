@@ -51,6 +51,6 @@
 ### Disco remoto
 
 1. Guardar credenciales de la cuenta de almacenamiento
-   - cmdkey /add:<storage-account-name>.file.core.windows.net /user:<storage-account-name> /pass:<storage-account-key>
+   - cmdkey /add:"storage-account-name".file.core.windows.net /user:"storage-account-name" /pass:"storage-account-key"
 2. Asignar a unidad la cuenta de almacenamiento (compartido) 
-   - net use Y: \\<storage-account-name>.file.core.windows.net\<file-storage-name>
+   - net use Y: \\"storage-account-name".file.core.windows.net\"file-storage-name"
