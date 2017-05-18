@@ -12,11 +12,11 @@
    - No exportar clave privada/Base 64
    
 3. Crear certificados de cliente
-  - makecert.exe -n "CN=P2SClientCert" -pe -sky exchange -m 96 -ss My -in "P2SRootCert" -is my -a sha1
+    - makecert.exe -n "CN=P2SClientCert" -pe -sky exchange -m 96 -ss My -in "P2SRootCert" -is my -a sha1
   
 4. Exportar certificado de cliente
-  - Abrir mmc
-  - Exportar clave privada
-  - Incluir... (si es posible)
+    - Abrir mmc
+    - Exportar clave privada
+    - Incluir... (si es posible)
   
 5. Instalar certificado cliente
