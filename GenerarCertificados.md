@@ -5,7 +5,7 @@
     - makecert -sky exchange -r -n "CN=P2SRootCert" -pe -a sha1 -len 2048 -ss My "P2SRootCert.cer"
   
 2. Exportar clave pública
-   - Abrir mmc
+   - Ejecutar mmc
    - Archivo/Agregar o quitar complementos/
    - cerftificados -> agregar (mi cuenta de usuario)
    - Personal/Certificados/Todas las tareas/Exportar
@@ -15,7 +15,7 @@
     - makecert.exe -n "CN=P2SClientCert" -pe -sky exchange -m 96 -ss My -in "P2SRootCert" -is my -a sha1
   
 4. Exportar certificado de cliente
-    - Abrir mmc
+    - Ejecutar mmc
     - Exportar clave privada
     - Incluir... (si es posible)
   
