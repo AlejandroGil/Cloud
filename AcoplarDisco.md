@@ -1,4 +1,4 @@
-# Acoplar disco a Linux
+# Linux
 
 1. Miramos el ultimo disco
    - sudo grep SCSI /var/log/messages
@@ -44,7 +44,7 @@
    - sudo vi /etc/fstab
       - \\cervantesprostorage.file.core.windows.net\cervantespro-shared  /shared cifs vers=3.0,username=,password=,dir_mode=0770,file_mode=0770,uid=apache,gid=apache
       
-# Acoplar disco a Windows
+# Windows
  - [Link](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-attach-disk-portal)
  cmdkey /add:<storage-account-name>.file.core.windows.net /user:<storage-account-name> /pass:<storage-account-key>
 
