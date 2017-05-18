@@ -20,3 +20,6 @@
     - Incluir... (si es posible)
   
 5. Instalar certificado cliente
+
+## Tutorial completo 
+[Tutorial](https://docs.microsoft.com/es-es/azure/vpn-gateway/vpn-gateway-howto-point-to-site-resource-manager-portal#a-namegeneratecertaparte-6-generación-de-certificados)
