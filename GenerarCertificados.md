@@ -1,7 +1,7 @@
 # Generar certificados para VPN
 
 1. Generar certificado raíz autofirmado
-    - Se guarda en C:/Users/xxx/
+    - Se guarda en la ruta que se ejecute el comando
     - makecert -sky exchange -r -n "CN=P2SRootCert" -pe -a sha1 -len 2048 -ss My "P2SRootCert.cer"
   
 2. Exportar clave pública
