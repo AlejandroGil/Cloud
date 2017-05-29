@@ -10,6 +10,7 @@
    - cerftificados -> agregar (mi cuenta de usuario)
    - Personal/Certificados/Todas las tareas/Exportar
    - No exportar clave privada/Base 64
+   - Se guarda en C:/Users/xxx
    
 3. Crear certificados de cliente
     - makecert.exe -n "CN=P2SClientCert" -pe -sky exchange -m 96 -ss My -in "P2SRootCert" -is my -a sha1
