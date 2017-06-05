@@ -41,3 +41,5 @@
 | -------------               |:-------------:        |
 | Authorization               | Bearer {access_token} |
 | Ocp-Apim-Subscription-Key   | subscription key      |
+
+[Tutorial](https://ahmet.im/blog/azure-rest-api-with-oauth2/)
