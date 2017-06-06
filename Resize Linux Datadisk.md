@@ -1,23 +1,23 @@
 # Aumentar disco de datos (Linux)
 
 1. Comprobamos si tiene IP pública y si es fija.
-	**ASM**
+	**[[ASM]]**
 	En el portal nuevo vamos a la máquina (clásica). Si su IP es un enlace y al hacer click nos lleva a un recurso 'IP reservada (clásico)' es que está reservada.
-	**ARM**
+	**[[ARM]]**
 	En el portal nuevo vamos a la máquina para ver si tiene IP pública. Si tiene, vamos a interfaz de red, configuraciones de IP y le damos a la que tenga. En esa pantalla podremos ver si la IP pública está reservada.
 		
 2. Reservamos si la IP que tiene la instancia actual es fija.
-	**ASM**
+	**[[ASM]]**
 	En Powershell:
 	###### Nos conectamos a la suscripción:
 		Select-AzureSubscription -SubscriptionName <'nombre suscripción'>
 	###### Si la IP no estaba reservada la reservamos:
 		New-AzureReservedIP –ReservedIPName <nombreip> –Location "West Europe" -ServiceName 
-	**ARM**
+	**[[ARM]]**
 	En la pantalla donde hemos visto si está reservada la podemos fijar.
 		
 3. Aumentar el disco de datos.
-	**ASM**
+	**[[ASM]]**
 	En Powershell:
 	###### Nos conectamos a la suscripción:
 		Select-AzureSubscription -SubscriptionName <'nombre suscripción'>
@@ -36,7 +36,7 @@
 		Update-AzureDisk -Label "$diskName" -DiskName "$diskName" -ResizedSizeInGB $size
 	###### Iniciamos la VM
 		$vm | Start-AzureVM
-	**ARM**
+	**[[ARM]]**
 	En el portal nuevo:
 	· Paramos y desasignamos la VM.
 	· Esperamos a que termine.
