@@ -39,10 +39,9 @@
 
 
 ### Disco remoto
-1. Añadimos una línea al fstab:
-   - //url/almacenamiento /directorio/en/la/vm cifs vers=3.0,username={cuenta},password={pass},dir_mode=0770,file_mode=0770,uid=apache,gid=apache
-   - sudo vi /etc/fstab
-      - \\cervantesprostorage.file.core.windows.net\cervantespro-shared  /shared cifs vers=3.0,username=,password=,dir_mode=0770,file_mode=0770,uid=apache,gid=apache
+1. Añadimos una línea al fstab (credenciales en portal):
+   -  //gstplandstorage.file.core.windows.net/shared /shared cifs vers=3.0,username=,password=,dir_mode=0755,file_mode=0755
+
       
 # Windows
  - [Link](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-attach-disk-portal)
