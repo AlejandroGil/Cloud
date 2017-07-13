@@ -4,6 +4,8 @@
    - sudo grep SCSI /var/log/messages
    - En Ubuntu
      - sudo grep SCSI /var/log/syslog
+     
+### [Script para montar HDD (en sdc)](../master/MontarDisco.sh)
 
 2. Listar particiones
    - sudo fdisk -l
