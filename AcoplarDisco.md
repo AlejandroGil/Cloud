@@ -5,7 +5,8 @@
    - En Ubuntu
      - sudo grep SCSI /var/log/syslog
      
-### [Script para montar HDD (en sdc)](../master/MontarDisco.sh)
+### [Script para montar HDD (en sdc)](../master/MontarDisco.sh) ->  wget -O mount.sh https://raw.githubusercontent.com/AlejandroGil/Cloud/master/MontarDisco.sh
+
 
 2. Listar particiones
    - sudo fdisk -l
