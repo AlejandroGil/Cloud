@@ -48,6 +48,8 @@
       
 # Windows
  - [Link](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-attach-disk-portal)
+ - Initialize
+ - New volume
  
 ### Disco remoto
 
