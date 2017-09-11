@@ -21,11 +21,10 @@ $nsg = Get-AzureRmNetworkSecurityGroup -Name name-nsg -ResourceGroupName name-rg
 
 #Retrieve IPs
 $IPList = ""
-
-For ($i=0, $priority=200; $i -lt $IPList.Count; $i++, priority+=2) {
+$priority=200
+For ($i=0; $i -lt $IPList.Count; $i++, $priority++) {
     $ruleName = $("name_xxx" + $i+1)
     $nsg | Add-AzureRmNetworkSecurityRuleConfig -Name $ruleName -Direction Outbound -Priority $priority -Access Allow -SourceAddressPrefix '*'  -SourcePortRange '*' -DestinationAddressPrefix $IPList[$i] -DestinationPortRange 80 -Protocol '*' | Set-AzureRmNetworkSecurityGroup
-    $nsg | Add-AzureRmNetworkSecurityRuleConfig -Name $ruleName -Direction Outbound -Priority $priority -Access Allow -SourceAddressPrefix '*'  -SourcePortRange '*' -DestinationAddressPrefix $IPList[$i+1] -DestinationPortRange 443 -Protocol '*' | Set-AzureRmNetworkSecurityGroup
 }
 
 #Set changes to the subscription
