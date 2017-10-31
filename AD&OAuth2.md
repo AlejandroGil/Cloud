@@ -43,3 +43,14 @@
 | Ocp-Apim-Subscription-Key   | subscription key      |
 
 [Tutorial](https://ahmet.im/blog/azure-rest-api-with-oauth2/)
+
+## Clonar API (git)
+
+git clone https://username:url encoded password@bugbashdev4.scm.azure-api.net/
+
+git clone https://apim:5926b783a487150085030004&201710220723&IbqEktx3r54EL3AW3XHPCuDPznl/eQi/W1QuNicKNztFtzRGfb1yrurZuVlyG5uFusqkt1m5pKM9gl12CDVFsw==@scm.avmservices.es/
+
+https://romerfra-immersiondays-acc9.signin.aws.amazon.com/console
+user1
+user123
+
