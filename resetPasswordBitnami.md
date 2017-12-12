@@ -14,7 +14,7 @@ If your stack ships MySQL v5.7.x, use the following content instead of that show
     FLUSH PRIVILEGES;
     ```
 
-    TIP: Check the MySQL version with the command /opt/bitnami/mysql/bin/mysqladmin --version or /opt/bitnami/mysql/bin/mysqld --version.
+TIP: Check the MySQL version with the command `/opt/bitnami/mysql/bin/mysqladmin --version` or `/opt/bitnami/mysql/bin/mysqld --version`.
 
 2. Stop the MySQL server:
   
