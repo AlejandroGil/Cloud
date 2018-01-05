@@ -22,5 +22,35 @@
   
 5. Instalar certificado cliente
 
+#Guardar certificado root en un KeyValut
+
+```powershell
+#Login Azure
+Add-AzureRmAccount
+Set-AzureRmContext -SubscriptionName "name"
+
+#Connect to KV
+$vaultName = 'vaultname'
+$certificateName = 'rootcert'
+
+#Import certificate to KV
+$securepfxpwd = ConvertTo-SecureString –String '******' –AsPlainText –Force
+$cer = Import-AzureKeyVaultCertificate -VaultName $vaultName -Name $certificateName -FilePath 'c:\rootcert.pfx' -Password $securepfxpwd
+
+#Export certificate
+$secretName = "TestCert"
+$kvSecret = Get-AzureKeyVaultSecret -VaultName $vaultName -Name $certificateName
+$kvSecretBytes = [System.Convert]::FromBase64String($kvSecret.SecretValueText)
+$certCollection = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2Collection
+$certCollection.Import($kvSecretBytes,$null,[System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable)
+ 
+#Get the file created to local
+$password = '*****'
+$protectedCertificateBytes = $certCollection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, $password)
+$pfxPath = [Environment]::GetFolderPath("Desktop") + "\testCert.pfx"
+[System.IO.File]::WriteAllBytes($pfxPath, $protectedCertificateBytes)
+
+```
+
 ## Tutorial completo 
 [Tutorial](https://docs.microsoft.com/es-es/azure/vpn-gateway/vpn-gateway-howto-point-to-site-resource-manager-portal#a-namegeneratecertaparte-6-generación-de-certificados)
