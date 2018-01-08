@@ -19,9 +19,9 @@ Acceder a Cloud Shel a traves del portal o desde [https://shell.azure.com](https
   
 - Listar secrets
 
-```java
-az keyvault secret list --vault-name fin-keyvault -o tsv | awk '{ print $2}'
-```
+  ```java
+  az keyvault secret list --vault-name fin-keyvault -o tsv | awk '{ print $2}'
+  ```
  
 - Obtener usuario (key del secret)
   ```java
