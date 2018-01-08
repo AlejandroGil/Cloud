@@ -1,6 +1,6 @@
 # Interaccion con Azure keyVault a través de Azure bash
 
-Acceder a Cloud Shel a traves del portal o desde [https://shell.azure.com](https://shell.azure.com/)
+Acceder a Cloud Shell a traves del portal o desde [https://shell.azure.com](https://shell.azure.com/)
 
 - Listar suscripciones
   ```java
