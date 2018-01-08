@@ -16,13 +16,29 @@ Acceder a Cloud Shel a traves del portal o desde [https://shell.azure.com](https
   ```java
   az resource list --output table
   ```
+  
+- Listar secrets
+
+```java
+az keyvault secret list --vault-name fin-keyvault -o tsv | awk '{ print $2}'
+```
  
 - Obtener usuario (key del secret)
   ```java
   az keyvault secret show --vault-name fin-keyvault --name haramain-username | grep value
   ```
   
- - Obtener password (value del secret)
+- Obtener password (value del secret)
   ```java
   az keyvault secret show --vault-name fin-keyvault --name haramain-password | grep value
+  ```
+
+- Crear secret
+  ```java
+  az keyvault secret set --vault-name fin-keyvault --name test-username --value user123
+  ```
+  
+- Borrar secret
+  ```java
+  az keyvault secret delete --vault-name fin-keyvault --name test-username
   ```
