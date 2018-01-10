@@ -4,6 +4,7 @@ $resourceGroup = "rg"
 $storageAccount = "storage"
 $tableName = "table"
 $partitionKey = "pkey"
+Set-AzureRmContext -SubscriptionName $subscriptionName
 $saContext = (Get-AzureRmStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccount).Context
 $table = Get-AzureStorageTableTable -resourceGroup $resourceGroup -tableName $tableName -storageAccountName $storageAccount
 
