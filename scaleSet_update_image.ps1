@@ -6,7 +6,6 @@ $newImageReference = "/subscriptions/xxx"
 $snapshotName = "config-snapshot-test"
 $location = "westeurope"
 $imageName = "config-image-test"
-$Ostype = "Linux"
 
 Set-AzureRmContext -SubscriptionName "xxx"
 
@@ -15,13 +14,13 @@ Set-AzureRmContext -SubscriptionName "xxx"
 #################################
 $snapshot = Get-AzureRmSnapshot -ResourceGroupName $rgName -SnapshotName $snapshotName
 $imageConfig = New-AzureRmImageConfig -Location $location
-$imageConfig = Set-AzureRmImageOsDisk -Image $imageConfig -OsType $OsType -SnapshotId $snapshot.Id
+$imageConfig = Set-AzureRmImageOsDisk -Image $imageConfig -OsType Linux -SnapshotId $snapshot.Id
 $rmImage = New-AzureRmImage -ImageName $imageName -ResourceGroupName $rgName -Image $imageConfig
 
 #################################
 ##       Update the vmss       ##
 #################################
 $vmss = Get-AzureRmVmss -ResourceGroupName $rgname -VMScaleSetName $vmssname
-$vmss.virtualMachineProfile.storageProfile.imageReference.id = $newImageReference
+$vmss.virtualMachineProfile.storageProfile.imageReference.id = $rmImage.id
 Update-AzureRmVmss -ResourceGroupName $rgname -Name $vmssname -VirtualMachineScaleSet $vmss
 Update-AzureRmVmss -ResourceGroupName $rgname -VirtualMachineScaleSet $vmss
