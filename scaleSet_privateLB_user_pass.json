@@ -29,10 +29,16 @@
         "description": "Admin username on all VMs."
       }
     },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password on all VMs."
+      }
+    },
     "sshKeyData": {
       "type": "string",
       "metadata": {
-        "description": "SSH rsa public key file as a string."
+        "description": "SSH rsa public key file as a string (ssh-rsa ...)"
       }
     },
     "image": {
@@ -130,17 +136,7 @@
           "osProfile": {
             "computerNamePrefix": "[parameters('vmssName')]",
             "adminUsername": "[parameters('adminUsername')]",
-            "linuxConfiguration": {
-              "disablePasswordAuthentication": true,
-              "ssh": {
-                "publicKeys": [
-                  {
-                    "path": "[variables('sshKeyPath')]",
-                    "keyData": "[parameters('sshKeyData')]"
-                  }
-                ]
-              }
-            }
+            "adminPassword": "[parameters('adminPassword')]"
           },
           "networkProfile": {
             "networkInterfaceConfigurations": [
@@ -162,7 +158,8 @@
                         ]
                       }
                     }
-                  ]
+                  ],
+                  "enableAcceleratedNetworking": false
                 }
               }
             ]
