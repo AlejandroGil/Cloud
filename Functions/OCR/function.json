@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "name": "imageBlob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "images/{blobname}.{blobextension}",
+      "connection": "minsaitocrpoc_STORAGE"
+    },
+    {
+      "type": "blob",
+      "name": "outputBlob",
+      "path": "results/{blobname}.txt",
+      "connection": "minsaitocrpoc_STORAGE",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}
