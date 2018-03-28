@@ -1,0 +1,7 @@
+{
+	"name": "MinsaitTranslate",
+	"version": "0.0.1",
+	"devDependencies": {
+		"request": "^2.81.0"
+	}
+}
