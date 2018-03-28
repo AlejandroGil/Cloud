@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "inputBlob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "translated/{blobname}.{extension}",
+      "connection": "minsaitocrpoc_STORAGE"
+    }
+  ],
+  "disabled": false
+}
