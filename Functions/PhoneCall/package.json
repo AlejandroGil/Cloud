@@ -1,0 +1,8 @@
+{
+	"name": "MinsaitPhoneCall",
+	"version": "0.0.1",
+	"devDependencies": {
+		"twilio": "^3.6.5",
+		"request-promise": "^4.2.2"
+	}
+}

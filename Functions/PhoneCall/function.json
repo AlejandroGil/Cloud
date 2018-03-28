@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "inputBlob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "voice-templates/{blob}",
+      "connection": "minsaitocrpoc_STORAGE"
+    }
+  ],
+  "disabled": false
+}
