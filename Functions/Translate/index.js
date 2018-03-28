@@ -4,7 +4,7 @@ var request = require('request');
 module.exports = function (context, inputBlob) {
     context.log("-------- Translate API Response --------");
 
-    var translateKey = "c9a474e7eb344722ba86722bcefea4f0";
+    var translateKey = "";
     var uriBaseTranslate = "https://api.microsofttranslator.com/V2/Http.svc/Translate";
     var extension = context.bindingData.blobextension;
     var textURL = "https://minsaitocrpoc.blob.core.windows.net/results/" + context.bindingData.blobname + "." + extension;
