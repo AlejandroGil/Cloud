@@ -2,6 +2,7 @@
 
 1. Generar certificado raíz autofirmado
     - Se guarda en la ruta que se ejecute el comando
+    
     `makecert -sky exchange -r -n "CN=P2SRootCert" -pe -a sha1 -len 2048 -ss My "P2SRootCert.cer"`
   
 2. Exportar clave pública
@@ -13,6 +14,7 @@
    - Se guarda en C:/Users/xxx
    
 3. Crear certificados de cliente
+
     `makecert.exe -n "CN=P2SClientCert" -pe -sky exchange -m 96 -ss My -in "P2SRootCert" -is my -a sha1`
   
 4. Exportar certificado de cliente
