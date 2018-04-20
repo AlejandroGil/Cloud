@@ -3,18 +3,14 @@
 	Param
     (   
         [Parameter(Mandatory=$true)]
-        [String]
-        $AzureResourceGroup,
+        [String]$AzureResourceGroup,
         [Parameter(Mandatory=$true)]
-        [String]
-		$Subscription,
+        [String]$Subscription,
 		[Parameter(Mandatory=$true)]
-        [Boolean]
-		$Shutdown,
+        [Boolean]$Shutdown,
 		#Input as array: [“Joe”,42,true]
 		[Parameter(Mandatory=$true)]
-        [Object]
-		$VMsList
+        [String[]]$VMsList
     )
 	
 	#The name of the Automation Credential Asset this runbook will use to authenticate to Azure.
@@ -29,7 +25,7 @@
     #Connect to your Azure Account   	
 	Add-AzureRmAccount -Credential $Cred
 	Add-AzureAccount -Credential $Cred
-	
+
 	if($Shutdown -eq $true){
 		Write-Output "Stopping VMs in '$($AzureResourceGroup)' resource group";
 	}
@@ -40,17 +36,19 @@
 	#ARM VMs
 	Write-Output "ARM VMs:";
 	Select-AzureRmSubscription -SubscriptionName $Subscription
-	Get-AzureRmVM -ResourceGroupName $AzureResourceGroup | ForEach-Object {
-	
-		if($Shutdown -eq $true){
-			
-				Write-Output "Stopping '$($_.Name)' ...";
-				Stop-AzureRmVM -ResourceGroupName $AzureResourceGroup -Name $_.Name -Force;
-		}
-		else{
-			Write-Output "Starting '$($_.Name)' ...";			
-			Start-AzureRmVM -ResourceGroupName $AzureResourceGroup -Name $_.Name;			
-		}			
-	};
-}
 
+	Foreach ($VM in $VMsList){
+		Write-Output "VM --- $VM";
+
+            if($Shutdown -eq $true){
+                
+                Write-Output "Stopping $VM ...";
+                #Stop-AzureRmVM -ResourceGroupName $AzureResourceGroup -Name $VM -Force;
+            }
+            else{
+                Write-Output "Starting $VM ...";			
+                #Start-AzureRmVM -ResourceGroupName $AzureResourceGroup -Name $VM;			
+            }			
+        };
+    }
+}
