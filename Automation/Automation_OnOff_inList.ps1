@@ -8,7 +8,7 @@
         [String]$Subscription,
 		[Parameter(Mandatory=$true)]
         [Boolean]$Shutdown,
-		#Input as array: [“Joe”,42,true]
+		#Input as array: ["VM1","VM2","VM3"]
 		[Parameter(Mandatory=$true)]
         [String[]]$VMsList
     )
@@ -38,17 +38,13 @@
 	Select-AzureRmSubscription -SubscriptionName $Subscription
 
 	Foreach ($VM in $VMsList){
-		Write-Output "VM --- $VM";
-
-            if($Shutdown -eq $true){
-                
-                Write-Output "Stopping $VM ...";
-                #Stop-AzureRmVM -ResourceGroupName $AzureResourceGroup -Name $VM -Force;
-            }
-            else{
-                Write-Output "Starting $VM ...";			
-                #Start-AzureRmVM -ResourceGroupName $AzureResourceGroup -Name $VM;			
-            }			
-        };
+        if($Shutdown -eq $true){
+            Write-Output "Stopping $VM ...";
+            #Stop-AzureRmVM -ResourceGroupName $AzureResourceGroup -Name $VM -Force;
+        }
+        else{
+            Write-Output "Starting $VM ...";			
+            #Start-AzureRmVM -ResourceGroupName $AzureResourceGroup -Name $VM;			
+        }			
     }
 }
