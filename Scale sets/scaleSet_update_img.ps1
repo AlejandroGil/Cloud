@@ -1,18 +1,35 @@
 ﻿Add-AzureRmAccount
 
+$location = "westeurope"
 $rgname = "xxx"
+$vmConfigName = "xxx"
 $vmssname = "xxx"
 
-#Image from napshot params
-$snapshotName = "xxx"
-$location = "westeurope"
-$imageName = "xxx"
-
 Set-AzureRmContext -SubscriptionName "xxx"
+
+###################################
+##  Create snapshot from Osdisk  ##
+###################################
+$vm = Get-AzureRmVm `
+  -ResourceGroupName $rgname `
+  -Name $vmConfigName
+
+$snapshot = New-AzureRmSnapshotConfig `
+  -SourceUri $vm.StorageProfile.OsDisk.ManagedDisk.Id `
+  -Location $location `
+  -CreateOption copy
+
+$date = Get-Date -UFormat "%d-%m"
+$snapshotName = $vmConfigName + $date + "-snap"
+New-AzureRmSnapshot `
+   -Snapshot $snapshot `
+   -SnapshotName $snapshotName `
+   -ResourceGroupName $rgname
 
 #################################
 ##  Create image from snapshot ##
 #################################
+$imageName = $vmConfigName + $date + "-image"
 $snapshot = Get-AzureRmSnapshot -ResourceGroupName $rgName -SnapshotName $snapshotName
 $imageConfig = New-AzureRmImageConfig -Location $location
 $imageConfig = Set-AzureRmImageOsDisk -Image $imageConfig -OsType Linux -SnapshotId $snapshot.Id
