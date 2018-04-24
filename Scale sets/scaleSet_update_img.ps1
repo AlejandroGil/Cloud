@@ -1,11 +1,11 @@
 ﻿Add-AzureRmAccount
 
 $location = "westeurope"
-$rgname = "AVM-IC2-pre"
-$vmConfigName = "AVM-IC2-pre-config"
-$vmssname = "AVM-IC2-pre-vmss"
+$rgname = "xxx"
+$vmConfigName = "xxx"
+$vmssname = "xxx"
 
-Set-AzureRmContext -SubscriptionName "Intelligent Valuations"
+Set-AzureRmContext -SubscriptionName "xxx"
 
 ###################################
 ##  Create snapshot from Osdisk  ##
@@ -29,7 +29,7 @@ New-AzureRmSnapshot `
 #################################
 ##  Create image from snapshot ##
 #################################
-$imageName = $vmConfigName + $date + "-image"
+$imageName = $vmConfigName + "-" + $date + "-image"
 $snapshot = Get-AzureRmSnapshot -ResourceGroupName $rgName -SnapshotName $snapshotName
 $imageConfig = New-AzureRmImageConfig -Location $location
 $imageConfig = Set-AzureRmImageOsDisk -Image $imageConfig -OsType Linux -SnapshotId $snapshot.Id
