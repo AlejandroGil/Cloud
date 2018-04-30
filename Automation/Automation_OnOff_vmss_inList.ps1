@@ -1,4 +1,4 @@
-﻿workflow Shutdown-Start-VMSS-by-rg-list{
+﻿workflow Shutdown-Start-VMSS-list{
 	Param
     (   
         [Parameter(Mandatory=$true)]
