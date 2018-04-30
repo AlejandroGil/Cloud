@@ -7,7 +7,7 @@
         [String]$Subscription,
 		[Parameter(Mandatory=$true)]
         [Boolean]$Shutdown,
-		#Input as array: ["VM1","VM2","VM3"]
+		#Input as array: ["VMSS1","VMSS2","VMSS3"]
 		[Parameter(Mandatory=$true)]
         [String[]]$VMSSNames
     )
