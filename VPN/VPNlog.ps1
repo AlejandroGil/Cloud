@@ -1,4 +1,4 @@
-Login-AzureRmAccount
+Add-AzureRmAccount
 
 $subscriptionId = 
     ( Get-AzureRmSubscription |
@@ -7,7 +7,7 @@ $subscriptionId =
           -PassThru
     ).SubscriptionId
 
-Select-AzureRmSubscription `
+Set-AzureRmContext `
     -SubscriptionId $subscriptionId
 
  
@@ -53,8 +53,7 @@ $storageAccountKey =
 Add-AzureAccount
 
 Select-AzureSubscription `
-    -SubscriptionId $subscriptionId
-
+    -SubscriptionId $subscriptionId -Default
 # Set Storage Context for storing logs
 
 $storageContext = 

@@ -1,4 +1,4 @@
-﻿Add-AzureRmAccount
+Add-AzureRmAccount
 
 $location = "westeurope"
 $rgname = "xxx"
@@ -19,7 +19,7 @@ $snapshot = New-AzureRmSnapshotConfig `
   -Location $location `
   -CreateOption copy
 
-$date = get-Date -UFormat "%d-%mh-%Hh"
+$date = get-Date -UFormat "%d-%m-%Hh"
 $snapshotName = $vmConfigName + "-" + $date + "-snap"
 New-AzureRmSnapshot `
    -Snapshot $snapshot `
