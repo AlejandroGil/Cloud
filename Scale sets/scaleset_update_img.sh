@@ -1,6 +1,6 @@
 #!/bin/bash
 
-az login --service-principal --username APP_ID --tenant TENANT_ID --password PATH_TO_CERT
+az login --service-principal --username APP_ID --tenant TENANT_ID --password SECRET_KEY
 
 location="westeurope"
 rgName="xxx"
