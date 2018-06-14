@@ -1,20 +1,54 @@
 #!/bin/bash
 
-az login --service-principal --username APP_ID --tenant TENANT_ID --password PATH_TO_CERT
+print_help() {
+  echo "Usage arguments:"
+  echo
+  echo "-rg | --resourceGroup"
+  echo "-vm | --vmConfigName"
+  echo "-vmss"
+  echo
+}
+
+if [ $# -lt 6 ]
+  then
+    echo "Inssuficient arguments"
+    exit
+fi
+
+while [ -n "${1}" ]
+do
+    case "${1}" in
+    -rg | --resourceGroup)
+        RG_NAME=${2}
+        shift 2
+    ;;
+    -vm | --vmConfigName)
+        VM_CONFIG_NAME=${2}
+        shift 2
+    ;;
+    -vmss)
+        VMSS_NAME=${2}
+        shift 2
+    ;;
+    *)
+        echo "Unexpected argument: ${1}. Exiting"
+        print_help
+        exit 1;
+    ;;
+    esac
+done
 
 location="westeurope"
-rgName="xxx"
-vmConfigName="xxx"
-vmssName="xxx"
-date=`date +"%d-%m-%Hh"`
-snapName=$vmConfigName + $date + "-snap"
-imageName=$vmConfigName + $date + "-image"
-diskName=az vm get-instance-view -n $vmConfigName -g $rgname --query storageProfile.osDisk.name
+DATE=$(date +"%d-%m-%Hh")
+SNAPSHOT_NAME=$VM_CONFIG_NAME-$DATE-"snap"
+IMAGE_NAME=$VM_CONFIG_NAME-$DATE-"image"
+
+DISK_NAME=$(az vm get-instance-view -n $VM_CONFIG_NAME -g $RG_NAME --query storageProfile.osDisk.name | tr -d '"')
 
 #Create snapshot from VM
-az snapshot create -g $rgName -n $snapName --source $diskName
+az snapshot create -g $RG_NAME -n $SNAPSHOT_NAME --source $DISK_NAME
 #Create image from snapshot
-az image create -g $rgName -n $imageName --os-type Linux --source $snapName
-$imageId = az image show -n $imageName -g $rgName --query id
+az image create -g $RG_NAME -n $IMAGE_NAME --os-type Linux --source $SNAPSHOT_NAME
+imageId=$(az image show -n $IMAGE_NAME -g $RG_NAME --query id)
 #Update VMSS with the image
-az vmss update --name $vmssName --resource-group $rgName --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
+az vmss update --name $VMSS_NAME --resource-group $RG_NAME --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
