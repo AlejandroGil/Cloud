@@ -19,7 +19,7 @@ $snapshot = New-AzureRmSnapshotConfig `
   -Location $location `
   -CreateOption copy
 
-$date = get-Date -UFormat "%d-%m-%Hh"
+$date = get-Date -UFormat "%d-%m-%Hh-%Mm"
 $snapshotName = $vmConfigName + "-" + $date + "-snap"
 New-AzureRmSnapshot `
    -Snapshot $snapshot `
