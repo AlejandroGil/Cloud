@@ -12,8 +12,8 @@ sudo mkfs -t ext4 /dev/sdc1
 if [ ! -d $DIRECTORY ]; then
   sudo mkdir /$DIRECTORY
 fi
-sudo mount /dev/sdc1 $DIRECTORY
-UUID=$(sudo -i blkid | grep sdc1 | awk -F'"' '{print $2}')
-fstab="UUID=$UUID $DIRECTORY ext4 defaults 1 2"
-sudo echo  "$fstab" >> /etc/fstab
-sudo chmod go+w $DIRECTORY
+sudo mount /dev/sdc1 /datadrive
+UUID=`sudo -i blkid | grep sdc1 | awk -F'"' '{print $2}'`
+fstab="UUID=$UUID /datadrive ext4 defaults 1 2"
+sudo echo  $fstab >> /etc/fstab
+sudo chmod go+w /datadrive
