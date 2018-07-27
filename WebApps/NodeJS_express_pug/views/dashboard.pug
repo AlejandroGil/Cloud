@@ -5,7 +5,7 @@ html(lang='en')
 		meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
 		meta(name='description', content='')
 		meta(name='author', content='')
-		link(rel='icon', href='../../../../favicon.ico')
+		link(rel='icon', href='favicon.ico')
 		title= "Costes Azure"
 		// Bootstrap core CSS
 		link(href='dist/css/bootstrap.min.css', rel='stylesheet')
@@ -14,7 +14,7 @@ html(lang='en')
 	body
 		nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0
 			a.navbar-brand.col-sm-3.col-md-2.mr-0(href='')= "Minsait"
-			input.form-control.form-control-dark.w-100(type='text', placeholder='Search', aria-label='Search')
+			//input.form-control.form-control-dark.w-100(type='text', placeholder='Search', aria-label='Search')
 			ul.navbar-nav.px-3
 				li.nav-item.text-nowrap
 					a.nav-link(href='#') Sign out
@@ -60,7 +60,7 @@ html(lang='en')
 									tr
 										td= currentSubscription
 										td= x_axis[index]
-										td= y_axis[index]
+										td= y_axis[index] + ' €'
 		//
 			Bootstrap core JavaScript
 			==================================================
