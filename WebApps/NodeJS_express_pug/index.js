@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
 
 app.get('/:suscription', function (req, res) {
     var suscription = req.params.suscription;
-    var rows = {"0":{"PartitionKey":{"_":"201807"},"RowKey":{"_":"CSCYT"},"Codigo":{"_":"UNK"},"ExtendedCost":{"_":"83.53€"},"Elemento":{"_":"UNK"},"Owner":{"_":"JoséIgnacioAguillo"}},"1":{"PartitionKey":{"_":"201807"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"2762.04€"},"Owner":{"_":"RafaelSánchezRiesco"}},"2":{"PartitionKey":{"_":"201806"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"2114€"},"Owner":{"_":"RafaelSánchezRiesco"}},"3":{"PartitionKey":{"_":"201805"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"1752,21€"},"Owner":{"_":"RafaelSánchezRiesco"}},"4":{"PartitionKey":{"_":"201808"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"3287,12€"},"Owner":{"_":"RafaelSánchezRiesco"}}};
+    var rows = {"0":{"PartitionKey":{"_":"201807"},"RowKey":{"_":"CSCYT"},"Codigo":{"_":"UNK"},"Cost":{"_":"83.53€"},"Elemento":{"_":"UNK"},"Owner":{"_":"JoséIgnacioAguillo"}},"1":{"PartitionKey":{"_":"201807"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"2762.04€"},"Owner":{"_":"RafaelSánchezRiesco"}},"2":{"PartitionKey":{"_":"201806"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"2114€"},"Owner":{"_":"RafaelSánchezRiesco"}},"3":{"PartitionKey":{"_":"201805"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"1752.21€"},"Owner":{"_":"RafaelSánchezRiesco"}},"4":{"PartitionKey":{"_":"201808"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"3287.12€"},"Owner":{"_":"RafaelSánchezRiesco"}},"5":{"PartitionKey":{"_":"201801"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"2762.04€"},"Owner":{"_":"RafaelSánchezRiesco"}},"6":{"PartitionKey":{"_":"201802"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"2114€"},"Owner":{"_":"RafaelSánchezRiesco"}},"7":{"PartitionKey":{"_":"201803"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"1752.21€"},"Owner":{"_":"RafaelSánchezRiesco"}},"8":{"PartitionKey":{"_":"201804"},"RowKey":{"_":"IntelligentValuations"},"Codigo":{"_":"AVALIM"},"Elemento":{"_":"6"},"ExtendedCost":{"_":"3287.12€"},"Owner":{"_":"RafaelSánchezRiesco"}}};
     
     //Copy the object content
     var subscriptionsJSON = Object.assign({}, rows);
@@ -24,19 +24,26 @@ app.get('/:suscription', function (req, res) {
         }
     }
 
-    //get costs
-    var costs = []
-    for (var e in subscriptionsJSON){
-        costs.push(parseFloat(subscriptionsJSON[e].ExtendedCost._));
+    var orderedCosts = {};
+    for (var k = 0; k < Object.keys(rows).length; k++){
+        if (subscriptionsJSON[k] != undefined){
+            var pk = subscriptionsJSON[k].PartitionKey._;
+            if (subscriptionsJSON[k].ExtendedCost != undefined){
+                orderedCosts[pk] = subscriptionsJSON[k].ExtendedCost._;
+            }
+            else {
+                orderedCosts[pk] = subscriptionsJSON[k].Cost._;
+            }
+        }
     }
 
-    //get months
-    var months = []
-    for (var el in subscriptionsJSON){
-        months.push(subscriptionsJSON[el].PartitionKey._);
+    var months = [];
+    var costs = [];
+    for (var e in orderedCosts){
+        months.push(e);
+        costs.push(parseFloat(orderedCosts[e]));
     }
-    
-    res.render('dashboard', {subscriptions: roles, currentSubscription: subscriptionsJSON, x_axis: months.sort(), y_axis: costs})
+    res.render('dashboard', {subscriptions: roles, currentSubscription: suscription, x_axis: months, y_axis: costs})
   });
   
 app.listen(3000, function(){

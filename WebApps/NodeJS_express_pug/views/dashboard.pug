@@ -56,11 +56,11 @@ html(lang='en')
 									th Mes
 									th Importe
 							tbody
-								each item, idx in currentSubscription
+								each val, index in x_axis
 									tr
-										td= currentSubscription[idx].RowKey._
-										td= currentSubscription[idx].PartitionKey._
-										td= currentSubscription[idx].ExtendedCost._
+										td= currentSubscription
+										td= x_axis[index]
+										td= y_axis[index]
 		//
 			Bootstrap core JavaScript
 			==================================================
@@ -79,29 +79,35 @@ html(lang='en')
 		script.
 			var ctx = document.getElementById("myChart");
 			var myChart = new Chart(ctx, {
-			type: 'bar',
-			data: {
-			labels: !{JSON.stringify(x_axis)},
-			datasets: [{
-			data: !{JSON.stringify(y_axis)},
-			lineTension: 0,
-			backgroundColor: 'transparent',
-			borderColor: '#007bff',
-			borderWidth: 4,
-			pointBackgroundColor: '#007bff'
-			}]
-			},
-			options: {
-			scales: {
-			yAxes: [{
-			ticks: {
-			beginAtZero: true
-			}
-			}]
-			},
-			legend: {
-			display: false,
-			}
-			}
+				type: 'bar',
+				data: {
+					labels: !{JSON.stringify(x_axis)},
+				datasets: [{
+					data: !{JSON.stringify(y_axis)},
+					lineTension: 0,
+					backgroundColor: 'transparent',
+					borderColor: '#007bff',
+					borderWidth: 4,
+					pointBackgroundColor: '#007bff'
+				}]
+				},
+				options: {
+					scales: {
+						xAxes: [{
+							ticks: {
+								fontSize: 17
+							}
+							}],
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+								fontSize: 17
+							}
+						}]
+					},
+					legend: {
+						display: false,
+					}
+				}
 			});
 
