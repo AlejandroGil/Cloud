@@ -1,0 +1,107 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+		meta(name='description', content='')
+		meta(name='author', content='')
+		link(rel='icon', href='../../../../favicon.ico')
+		title= "Costes Azure"
+		// Bootstrap core CSS
+		link(href='dist/css/bootstrap.min.css', rel='stylesheet')
+		// Custom styles for this template
+		link(href='dashboard.css', rel='stylesheet')
+	body
+		nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0
+			a.navbar-brand.col-sm-3.col-md-2.mr-0(href='')= "Minsait"
+			input.form-control.form-control-dark.w-100(type='text', placeholder='Search', aria-label='Search')
+			ul.navbar-nav.px-3
+				li.nav-item.text-nowrap
+					a.nav-link(href='#') Sign out
+		.container-fluid
+			.row
+				nav.col-md-2.d-none.d-md-block.bg-light.sidebar
+					.sidebar-sticky
+						ul.nav.flex-column
+							li.nav-item
+								a.nav-link.active(href='#')
+									span(data-feather='home')
+									|                   Costes Azure 
+									span.sr-only (current)
+						h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+							span Suscripción
+							a.d-flex.align-items-center.text-muted(href='#')
+						ul.nav.flex-column.mb-2
+							each item in subscriptions
+								li.nav-item
+									a.nav-link(href=item)
+										span(data-feather='file-text')
+										| 				#{item}
+				main.col-md-9.ml-sm-auto.col-lg-10.pt-3.px-4(role='main')
+					.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
+						h1.h2 Costes Azure
+						//.btn-toolbar.mb-2.mb-md-0
+							.btn-group.mr-2
+								button.btn.btn-sm.btn-outline-secondary Share
+								button.btn.btn-sm.btn-outline-secondary Export
+							button.btn.btn-sm.btn-outline-secondary.dropdown-toggle
+								span(data-feather='calendar')
+								|                 This week
+					canvas#myChart.my-4(width='900', height='380')
+					.table-responsive
+						table.table.table-striped.table-sm
+							thead
+								tr
+									th Suscripción
+									th Mes
+									th Importe
+							tbody
+								each item, idx in currentSubscription
+									tr
+										td= currentSubscription[idx].RowKey._
+										td= currentSubscription[idx].PartitionKey._
+										td= currentSubscription[idx].ExtendedCost._
+		//
+			Bootstrap core JavaScript
+			==================================================
+		// Placed at the end of the document so the pages load faster
+		script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin='anonymous')
+		script.
+			window.jQuery || document.write('<script src="assets/js/vendor/jquery-slim.min.js"><\\/script>')
+		script(src='assets/js/vendor/popper.min.js')
+		script(src='dist/js/bootstrap.min.js')
+		// Icons
+		script(src='https://unpkg.com/feather-icons/dist/feather.min.js')
+		script.
+			feather.replace()
+		// Graphs
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js')
+		script.
+			var ctx = document.getElementById("myChart");
+			var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+			labels: !{JSON.stringify(x_axis)},
+			datasets: [{
+			data: !{JSON.stringify(y_axis)},
+			lineTension: 0,
+			backgroundColor: 'transparent',
+			borderColor: '#007bff',
+			borderWidth: 4,
+			pointBackgroundColor: '#007bff'
+			}]
+			},
+			options: {
+			scales: {
+			yAxes: [{
+			ticks: {
+			beginAtZero: true
+			}
+			}]
+			},
+			legend: {
+			display: false,
+			}
+			}
+			});
+
