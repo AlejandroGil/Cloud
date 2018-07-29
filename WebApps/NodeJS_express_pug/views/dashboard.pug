@@ -5,7 +5,7 @@ html(lang='en')
 		meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
 		meta(name='description', content='')
 		meta(name='author', content='')
-		link(rel='icon', href='favicon.ico')
+		link(rel='icon', href='azure.ico')
 		title= "Costes Azure"
 		// Bootstrap core CSS
 		link(href='dist/css/bootstrap.min.css', rel='stylesheet')
@@ -26,7 +26,7 @@ html(lang='en')
 							li.nav-item
 								a.nav-link.active(href='#')
 									span(data-feather='home')
-									|                   Costes Azure 
+									|                   Costes Azure
 									span.sr-only (current)
 						h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
 							span Suscripción
@@ -39,7 +39,10 @@ html(lang='en')
 										| 				#{item}
 				main.col-md-9.ml-sm-auto.col-lg-10.pt-3.px-4(role='main')
 					.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pb-2.mb-3.border-bottom
-						h1.h2 Costes Azure
+						if currentSubscription
+							h1.h2 Costes Azure - #{currentSubscription}
+						else
+							h1.h2 Costes Azure
 						//.btn-toolbar.mb-2.mb-md-0
 							.btn-group.mr-2
 								button.btn.btn-sm.btn-outline-secondary Share
@@ -52,13 +55,11 @@ html(lang='en')
 						table.table.table-striped.table-sm
 							thead
 								tr
-									th Suscripción
 									th Mes
 									th Importe
 							tbody
 								each val, index in x_axis
 									tr
-										td= currentSubscription
 										td= x_axis[index]
 										td= y_axis[index] + ' €'
 		//
@@ -85,9 +86,9 @@ html(lang='en')
 				datasets: [{
 					data: !{JSON.stringify(y_axis)},
 					lineTension: 0,
-					backgroundColor: 'transparent',
+					backgroundColor: 'rgba(54, 162, 235, 0.4)',
 					borderColor: '#007bff',
-					borderWidth: 4,
+					borderWidth: 2,
 					pointBackgroundColor: '#007bff'
 				}]
 				},
