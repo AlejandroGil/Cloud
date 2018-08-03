@@ -1,0 +1,39 @@
+#Miramos el ultimo disco
+sudo grep SCSI /var/log/messages     /// EN UBUNTU:     sudo grep SCSI /var/log/syslog
+
+#Creamos la particion
+sudo fdisk /dev/sdc
+n
+(enter)
+(enter)
+(enter)
+(enter)
+w
+
+#Le damos formato
+sudo mkfs -t ext4 /dev/sdc1
+
+#Lo montamos
+sudo mkdir /datadrive
+sudo mount /dev/sdc1 /datadrive
+
+#Consultamos el UUID
+sudo -i blkid
+
+
+#Añadimos el UUID al fstab (UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /datadrive              ext4    defaults        1 2)
+sudo vi /etc/fstab
+
+#Probamos que se desmonta y monta correctamente
+sudo umount /datadrive
+sudo mount /datadrive
+
+#Damos permisos sobre el directorio
+sudo chmod go+w /datadrive
+
+
+### DISCO REMOTO ###
+#Añadimos una línea al fstab (//url/almacenamiento /directorio/en/la/vm cifs vers=3.0,username={username},password={password},dir_mode=0770,file_mode=0770,uid=apache,gid=apache)
+sudo vi /etc/fstab
+
+\\<storageaccount>.file.core.windows.net\<fileshare>  /shared cifs vers=3.0,username=<username>,password=<password>,dir_mode=0770,file_mode=0770,uid=apache,gid=apache
