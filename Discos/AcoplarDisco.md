@@ -1,3 +1,4 @@
+# Particiones menores que 2TB
 # Linux
 
 1. Miramos el ultimo disco
@@ -57,3 +58,25 @@
    - cmdkey /add:"storage-account-name".file.core.windows.net /user:"storage-account-name" /pass:"storage-account-key"
 2. Asignar a unidad la cuenta de almacenamiento (compartido) 
    - net use Y: \\"storage-account-name".file.core.windows.net\"file-storage-name"
+   
+### Si hay que montar un disco mayor a 2TB:
+Usar tvl
+```
+sudo apt-get install lvm2
+```
+
+```
+sudo vgcreate volumegroup /dev/sdd
+```
+Para obtener el tamaño del volumen logico, ejecutar lv create con un tamaño mucho mayor al del disco p.ej: sudo lvcreate -L 100T
+```
+sudo lvcreate -l 767999 -n logicalvolume volumegroup /dev/sdd
+```
+```
+sudmkfs.ext4 /dev/volumegroup/logicalvolume
+```
+Añadir en `/etc/fstab` la ruta de montaje del nuevo disco. 
+Para obtenerla:
+```
+cat /etc/mtab
+```
