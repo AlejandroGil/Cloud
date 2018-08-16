@@ -44,11 +44,14 @@ pipeline {
             steps {
                 withCredentials([
                     string(credentialsId: 'Mycar-rg', variable: 'MYCAR_RG'),
-                    string(credentialsId: 'Mycar_appName', variable: 'MYCAR_APPNAME')
+                    string(credentialsId: 'Mycar_appName', variable: 'MYCAR_APPNAME'),
+                    azureServicePrincipal('AVAL-Service-principal')
                 ]){
-                azureWebAppPublish azureCredentialsId: 'AVAL-Service-principal',
-                   resourceGroup: '$MYCAR_RG', appName: '$MYCAR_APPNAME',
-                   filePath: '*.war', sourceDirectory: 'target', targetDirectory: 'webapps'
+                azureWebAppPublish azureCredentialsId: '$CLIENT_ID',
+                                   resourceGroup: '$MYCAR_RG', 
+                                   appName: '$MYCAR_APPNAME',
+                                   filePath: '*.war', sourceDirectory: 'target', 
+                                   targetDirectory: 'webapps'
                 }
             }
         }

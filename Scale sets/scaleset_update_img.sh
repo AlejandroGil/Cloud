@@ -39,7 +39,7 @@ do
 done
 
 location="westeurope"
-DATE=$(date +"%d-%m-%Hh")
+DATE=$(date +"%Y-%m-%d_%H%M%S" -d "+2 hour")
 SNAPSHOT_NAME=$VM_CONFIG_NAME-$DATE-"snap"
 IMAGE_NAME=$VM_CONFIG_NAME-$DATE-"image"
 

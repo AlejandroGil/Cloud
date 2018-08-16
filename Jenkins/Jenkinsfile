@@ -4,6 +4,9 @@ pipeline {
         maven 'Maven 3.5.3'
         jdk 'JDK8'
     }
+    options { 
+        buildDiscarder(logRotator(numToKeepStr: '1')) 
+    }
     stages {
         stage ('Initialize') {
             steps {
@@ -13,7 +16,7 @@ pipeline {
                 '''
             }
         }
- 
+  
         stage ('Build') {
             steps {
                 sh 'mvn -Dmaven.test.failure.ignore=true clean package' 
@@ -24,7 +27,7 @@ pipeline {
                 }
             }
         }        
-
+ 
         //Ask confirmation to deploy to config VM 
         stage('Decide tag on deploy to config') {
             agent none
@@ -38,7 +41,7 @@ pipeline {
                 }
             }
         }
-
+ 
         //Deploy to config job
         stage('Tag on deploy to config') {
             agent any
@@ -49,7 +52,7 @@ pipeline {
                 build job:'../AVAL_Tomcat_deploy' , parameters:[string(name: 'BRANCH_NAME', value: "${env.BRANCH_NAME}")]
             }
         }
-
+ 
         //Ask confirmation to deploy to VMSS
         stage('Decide tag on deploy to VMSS') {
             agent none
@@ -63,7 +66,7 @@ pipeline {
                 }
             }
         }
-
+ 
         //Deploy to VMSS
         stage('Tag on deploy to VMSS') {
             agent any

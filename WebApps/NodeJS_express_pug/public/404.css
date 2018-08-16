@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font-weight: 600;
+  color: #343434;
+}
+
+.error_section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-image: linear-gradient(-225deg, #FFFFFF, #dddddd);
+}
+.error_section_subtitle {
+  color: #1a72e4;
+  text-transform: uppercase;
+  letter-spacing: 3pt;
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-bottom: -2em;
+}
+.error_section .error_title {
+  --x-shadow: 0;
+  --y-shadow: 0;
+  --x:50%;
+  --y:50%;
+  font-size: 15rem;
+  transition: all 0.2s ease;
+  position: relative;
+  padding: 2rem;
+}
+.error_section .error_title p {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background-image: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.05), transparent);
+  background-position: var(--x) var(--y);
+  background-repeat: no-repeat;
+  text-shadow: none;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.1s ease;
+}
+
+.btn {
+  padding: 0.8em 1.5em;
+  background-image: linear-gradient(to top, #1a72e4, #5091e6);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2), inset 0px -2px 5px 0px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1.5pt;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: ease-out 0.2s all;
+}
+
+.btn-2 {
+    letter-spacing: 0;
+}
+
+.btn-2:hover,
+.btn-2:active {
+  letter-spacing: 2px;
+}
+
+.btn-2:after,
+.btn-2:before {
+  backface-visibility: hidden;
+  border: 1px solid rgba(#fff, 0);
+  bottom: 0px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transition: all 280ms ease-in-out;
+  width: 0;
+}
+
+.btn-2:hover:after,
+.btn-2:hover:before {
+  backface-visibility: hidden;
+  border-color: #fff;
+  transition: width 350ms ease-in-out;
+  width: 70%;
+}
+
+.btn-2:hover:before {
+  bottom: auto;
+  top: 0;
+  width: 70%;
+}
