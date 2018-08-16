@@ -1,11 +1,11 @@
 Add-AzureRmAccount
 
-$location = "westeurope"
-$rgname = "AVM-v2"
-$vmConfigName = "AVMv2-APP-config"
-$vmssname = "AVMv2-APP-vmss"
+$location = "xxx"
+$rgname = "xxx"
+$vmConfigName = "xxx"
+$vmssname = "xxx"
 
-Set-AzureRmContext -SubscriptionName "Intelligent Valuations"
+Set-AzureRmContext -SubscriptionName "xxx"
 
 ###################################
 ##  Create snapshot from Osdisk  ##
