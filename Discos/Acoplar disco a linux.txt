@@ -1,7 +1,5 @@
 #Miramos el ultimo disco
-sudo grep SCSI /var/log/messages
-
-/// EN UBUNTU:     sudo grep SCSI /var/log/syslog
+sudo grep SCSI /var/log/messages     /// EN UBUNTU:     sudo grep SCSI /var/log/syslog
 
 #Creamos la particion
 sudo fdisk /dev/sdc
