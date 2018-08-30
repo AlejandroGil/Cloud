@@ -28,47 +28,56 @@ pipeline {
             }
         }        
  
-        //Ask confirmation to deploy to config VM 
-        stage('Decide tag on deploy to config') {
-            agent none
+        //Deploy to config job
+        stage('Deploy to config') {
+            agent any
             when {
                 expression {env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "master"}
             }
             steps {
-                script {
-                env.TAG_ON_DEPLOY_TO_CONFIG = input message: 'User input required',
-                    parameters: [choice(name: 'Tag on deploy to config', choices: 'No\nYes', description: 'Choose "Yes" if you want to deploy this build to config VM')]
+                withCredentials([
+                    usernamePassword(credentialsId: "service_principal", usernameVariable: 'SP_USER', passwordVariable: 'SP_PASS'),
+                    string(credentialsId: 'subscriptionID', variable: 'SUBSCRIPTION'),
+                    string(credentialsId: 'tenant', variable: 'TENANT'),
+                    string(credentialsId: 'AVAL_VM_CONFIG_USER', variable: 'AVAL_VM_CONFIG_USER'),
+                    string(credentialsId: 'AVAL_VM_CONFIG_PASS', variable: 'AVAL_VM_CONFIG_PASS'),
+                    string(credentialsId: 'AVAL_VM_CONFIG_NAME', variable: 'AVAL_VM_CONFIG_NAME'),
+                    string(credentialsId: 'AVAL_CONFIG_RESOURCEGROUP', variable: 'AVAL_CONFIG_RESOURCEGROUP'),
+                    string(credentialsId: 'AVAL_VM_CONFIG_IP', variable: 'AVAL_VM_CONFIG_IP'),
+                    string(credentialsId: 'AVAL_SUBNET', variable: 'AVAL_SUBNET'),
+                    string(credentialsId: 'BASE_CONFIG_IMAGE', variable: 'BASE_CONFIG_IMAGE')
+                ]){
+                        //Create config vm
+                        sh '''
+                            az login --service-principal -u $SP_USER -p $SP_PASS -t $TENANT
+                            az account set -s $SUBSCRIPTION
+                            az group create -l westeurope -n $AVAL_CONFIG_RESOURCEGROUP
+                            az vm create -g $AVAL_CONFIG_RESOURCEGROUP -n $AVAL_VM_CONFIG_NAME --size Standard_A4_v2 --admin-username $AVAL_VM_CONFIG_USER --admin-password $AVAL_VM_CONFIG_PASS --subnet $AVAL_SUBNET --image $BASE_CONFIG_IMAGE --private-ip-address $AVAL_VM_CONFIG_IP --nsg "" --public-ip-address ""
+                        '''
+                        script{
+                            IP = sh(returnStdout: true, script: 'az vm show -g $AVAL_CONFIG_RESOURCEGROUP -n $AVAL_VM_CONFIG_NAME -d --query privateIps')
+                        }
+                        build job:'../AVAL_Tomcat_deploy' , parameters:[[$class: 'StringParameterValue', name: 'BRANCH_NAME', value: "${env.BRANCH_NAME}"], [$class: 'StringParameterValue', name: 'IP', value: "${AVAL_VM_CONFIG_IP}"]]
                 }
-            }
-        }
- 
-        //Deploy to config job
-        stage('Tag on deploy to config') {
-            agent any
-            when {
-                environment name: 'TAG_ON_DEPLOY_TO_CONFIG', value: 'Yes'
-            }
-            steps {
-                build job:'../AVAL_Tomcat_deploy' , parameters:[string(name: 'BRANCH_NAME', value: "${env.BRANCH_NAME}")]
+                echo "Config VM created successfully with IP: ${IP}"
             }
         }
  
         //Ask confirmation to deploy to VMSS
         stage('Decide tag on deploy to VMSS') {
             agent none
-            when {
-                environment name: 'TAG_ON_DEPLOY_TO_CONFIG', value: 'Yes'
-            }
             steps {
                 script {
-                env.TAG_ON_DEPLOY_TO_VMSS = input message: 'User input required',
-                    parameters: [choice(name: 'Tag on deploy to VMSS', choices: 'No\nYes', description: 'Choose "Yes" if you want to deploy this build to the scale set')]
+                    timeout(60) {
+                    env.TAG_ON_DEPLOY_TO_VMSS = input message: 'User input required',
+                        parameters: [choice(name: 'Tag on deploy to VMSS', choices: 'No\nYes', description: 'Choose "Yes" if you want to deploy this build to AVAL scale set')]
+                    }
                 }
             }
         }
  
         //Deploy to VMSS
-        stage('Tag on deploy to VMSS') {
+        stage('Deploy to VMSS') {
             agent any
             when {
                 environment name: 'TAG_ON_DEPLOY_TO_VMSS', value: 'Yes'
@@ -79,16 +88,34 @@ pipeline {
                     string(credentialsId: 'subscriptionID', variable: 'SUBSCRIPTION'),
                     string(credentialsId: 'tenant', variable: 'TENANT'),
                     string(credentialsId: 'AVAL_resourceGroup', variable: 'AVAL_RESOURCE_GROUP'),
-                    string(credentialsId: 'AVAL_vmConfigName', variable: 'AVAL_VM_CONFIG_NAME'),
-                    string(credentialsId: 'AVAL_vmssName', variable: 'AVAL_VMSS_NAME')
+                    string(credentialsId: 'AVAL_CONFIG_RESOURCEGROUP', variable: 'AVAL_CONFIG_RESOURCEGROUP'),
+                    string(credentialsId: 'AVAL_VM_CONFIG_NAME', variable: 'AVAL_VM_CONFIG_NAME'),
+                    string(credentialsId: 'AVAL_vmssName', variable: 'AVAL_VMSS_NAME')])
+                    {
+                        sh '''
+                            az login --service-principal -u $SP_USER -p $SP_PASS -t $TENANT
+                            az account set -s $SUBSCRIPTION
+                            sh /opt/jenkinsScripts/deploy_vmss.sh -rg $AVAL_RESOURCE_GROUP -crg $AVAL_CONFIG_RESOURCEGROUP -vm $AVAL_VM_CONFIG_NAME -vmss $AVAL_VMSS_NAME
+                        '''
+                    }
+            }
+        }
+    }
+    //Delete config resource group when finish
+     post {
+        always {
+            withCredentials([
+                    usernamePassword(credentialsId: "service_principal", usernameVariable: 'SP_USER', passwordVariable: 'SP_PASS'),
+                    string(credentialsId: 'subscriptionID', variable: 'SUBSCRIPTION'),
+                    string(credentialsId: 'tenant', variable: 'TENANT'),
+                    string(credentialsId: 'AVAL_CONFIG_RESOURCEGROUP', variable: 'AVAL_CONFIG_RESOURCEGROUP')
                     ]){
                         sh '''
                             az login --service-principal -u $SP_USER -p $SP_PASS -t $TENANT
                             az account set -s $SUBSCRIPTION
-                            sh /opt/jenkinsScripts/deploy_vmss.sh -rg $AVAL_RESOURCE_GROUP -vm $AVAL_VM_CONFIG_NAME -vmss $AVAL_VMSS_NAME
+                            az group delete -n $AVAL_CONFIG_RESOURCEGROUP --yes
                         '''
-                }
-            }
+                    }
         }
     }
 }

@@ -4,12 +4,13 @@ print_help() {
   echo "Usage arguments:"
   echo
   echo "-rg | --resourceGroup"
+  echo "-crg | --configResourceGroup"
   echo "-vm | --vmConfigName"
   echo "-vmss"
   echo
 }
 
-if [ $# -lt 6 ]
+if [ $# -lt 7 ]
   then
     echo "Inssuficient arguments"
     exit
@@ -20,6 +21,10 @@ do
     case "${1}" in
     -rg | --resourceGroup)
         RG_NAME=${2}
+        shift 2
+    ;;
+    -crg | --configResourceGroup)
+        CONFIG_RG_NAME=${2}
         shift 2
     ;;
     -vm | --vmConfigName)
@@ -43,7 +48,7 @@ DATE=$(date +"%Y-%m-%d_%H%M%S" -d "+2 hour")
 SNAPSHOT_NAME=$VM_CONFIG_NAME-$DATE-"snap"
 IMAGE_NAME=$VM_CONFIG_NAME-$DATE-"image"
 
-DISK_NAME=$(az vm get-instance-view -n $VM_CONFIG_NAME -g $RG_NAME --query storageProfile.osDisk.name | tr -d '"')
+DISK_NAME=$(az vm get-instance-view -n $VM_CONFIG_NAME -g $CONFIG_RG_NAME --query storageProfile.osDisk.managedDisk.id | tr -d '"')
 
 #Create snapshot from VM
 az snapshot create -g $RG_NAME -n $SNAPSHOT_NAME --source $DISK_NAME
