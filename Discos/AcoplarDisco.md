@@ -60,23 +60,24 @@
    - net use Y: \\"storage-account-name".file.core.windows.net\"file-storage-name"
    
 ### Si hay que montar un disco mayor a 2TB:
-Usar tvl
+
 ```
 sudo apt-get install lvm2
 ```
 
 ```
-sudo vgcreate volumegroup /dev/sdd
-```
-Para obtener el tamaño del volumen logico, ejecutar lv create con un tamaño mucho mayor al del disco p.ej: sudo lvcreate -L 100T
-```
-sudo lvcreate -l 767999 -n logicalvolume volumegroup /dev/sdd
+sudo vgcreate vg1 /dev/sdc
 ```
 ```
-sudmkfs.ext4 /dev/volumegroup/logicalvolume
+sudo lvcreate -l 100%FREE -n lv1 vg1
 ```
-Añadir en `/etc/fstab` la ruta de montaje del nuevo disco. 
-Para obtenerla:
+```
+sudo mount /dev/mapper/vg1-lv1 /datadrive/
+```
+```
+/dev/mapper/vg1-lv1 /datadrive ext4 defaults 0 0
+```
+
 ```
 cat /etc/mtab
 ```
