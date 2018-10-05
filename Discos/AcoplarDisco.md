@@ -72,6 +72,9 @@ sudo vgcreate vg1 /dev/sdc
 sudo lvcreate -l 100%FREE -n lv1 vg1
 ```
 ```
+sudo mkfs.ext4 /dev/vg1/lv1
+```
+```
 sudo mount /dev/mapper/vg1-lv1 /datadrive/
 ```
 ```
