@@ -117,5 +117,26 @@ pipeline {
                         '''
                     }
         }
+        //Delete created image
+        failure{
+            withCredentials([
+                    usernamePassword(credentialsId: "service_principal", usernameVariable: 'SP_USER', passwordVariable: 'SP_PASS'),
+                    string(credentialsId: 'subscriptionID', variable: 'SUBSCRIPTION'),
+                    string(credentialsId: 'tenant', variable: 'TENANT'),
+                    string(credentialsId: 'AVAL_resourceGroup', variable: 'AVAL_RESOURCE_GROUP'),
+                    string(credentialsId: 'AVAL_CONFIG_RESOURCEGROUP', variable: 'AVAL_CONFIG_RESOURCEGROUP')
+                    ]){
+                        sh '''
+                            az login --service-principal -u $SP_USER -p $SP_PASS -t $TENANT
+                            az account set -s $SUBSCRIPTION
+                        '''
+                        script{
+                            last_image = sh(returnStdout: true, script: 'az image list -g $AVAL_RESOURCE_GROUP -o table --query "[].name" | sort -r')
+                        }
+                        sh '''
+                            az image delete -n $last_image -g $AVAL_RESOURCE_GROUP
+                        '''
+                    }
+        }
     }
 }
