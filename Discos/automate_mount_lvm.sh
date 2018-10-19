@@ -1,5 +1,4 @@
 #!/bin/bash
-
 physical_device=$(sudo grep SCSI /var/log/syslog | tail -1 | grep -i attached | awk '{print $10}' | tr -d [])
 
 sudo apt-get install -y lvm2
