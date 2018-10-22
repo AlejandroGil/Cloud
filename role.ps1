@@ -1,7 +1,7 @@
 ﻿#Crear rol a partir de otro, añadiendo funcionalidad
 Add-AzureRmAccount
 
-$role = Get-AzureRmRoleDefinition "Indra owner"
+$role = Get-AzureRmRoleDefinition "Indra subscription owner"
 
 #Hacer el rol asignable a cualquier suscripcion
 #Get-AzureSubscription | ForEach {$role.AssignableScopes.Remove("/subscriptions/" + $_.SubscriptionId)}
