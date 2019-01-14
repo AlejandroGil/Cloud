@@ -4,7 +4,7 @@
   "parameters": {
     "vmSku": {
       "type": "string",
-      "defaultValue": "Standard_A1",
+      "defaultValue": "Standard_F8s_v2",
       "metadata": {
         "description": "Size of VMs in the VM Scale Set."
       }
@@ -58,6 +58,12 @@
       "metadata": {
         "description": "Name of the existing subnet to deploy the scale set into."
       }
+    },
+    "rulePort": {
+      "type": "int",
+      "metadata": {
+        "description": "Port for the balancing rule"
+      }
     }
   },
   "variables": {
@@ -69,6 +75,8 @@
     "nicName": "[concat(parameters('vmssName'), 'nic')]",
     "ipConfigName": "[concat(parameters('vmssName'), '-ipconfig')]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
+    "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/backEndPool')]",
+    "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
     "computeApiVersion": "2017-03-30",
     "networkApiVersion": "2017-04-01",
     "storageApiVersion": "2015-06-15",
@@ -96,6 +104,38 @@
           {
             "name": "[variables('bePoolName')]"
           }
+        ],
+        "loadBalancingRules": [
+          {
+            "name": "rule_8080",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[variables('frontEndIPConfigID')]"
+              },
+              "backendAddressPool": {
+                "id": "[variables('lbPoolID')]"
+              },
+              "protocol": "tcp",
+              "frontendPort": 8080,
+              "backendPort": 8080,
+              "enableFloatingIP": false,
+              "idleTimeoutInMinutes": 5,
+              "probe": {
+                "id": "[variables('lbProbeID')]"
+              }
+            }
+          }
+        ],
+        "probes": [
+          {
+            "name": "tcpProbe",
+            "properties": {
+              "protocol": "tcp",
+              "port": 8080,
+              "intervalInSeconds": 5,
+              "numberOfProbes": 2
+            }
+          }
         ]
       }
     },
@@ -115,7 +155,13 @@
       "properties": {
         "overprovision": "true",
         "upgradePolicy": {
-          "mode": "Manual"
+          "mode": "Rolling",
+          "rollingUpgradePolicy": {
+            "maxBatchInstancePercent": 20,
+            "maxUnhealthyInstancePercent": 20,
+            "maxUnhealthyUpgradedInstancePercent": 5,
+            "pauseTimeBetweenBatches": "PT1M"
+          }
         },
         "virtualMachineProfile": {
           "storageProfile": {
@@ -143,6 +189,9 @@
             }
           },
           "networkProfile": {
+            "healthProbe": {
+              "id": "[variables('lbProbeID')]"
+            },
             "networkInterfaceConfigurations": [
               {
                 "name": "[variables('nicName')]",

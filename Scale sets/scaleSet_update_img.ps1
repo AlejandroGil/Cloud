@@ -1,9 +1,6 @@
 Add-AzureRmAccount
 
-$location = "xxx"
-$rgname = "xxx"
-$vmConfigName = "xxx"
-$vmssname = "xxx"
+$date = get-Date -UFormat "%Y-%m-%d_%H%M%S"
 
 Set-AzureRmContext -SubscriptionName "xxx"
 
