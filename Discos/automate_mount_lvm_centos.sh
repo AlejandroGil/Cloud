@@ -1,6 +1,6 @@
 #!/bin/bash
 #get device to mount
-physical_device=$(sudo grep SCSI /var/log/messages | tail -1 | grep -i attached | awk '{print $8}' | tr -d [])
+physical_device=$(sudo grep SCSI /var/log/messages | grep -i attached | tail -1 | awk '{print $8}' | tr -d [])
 
 #install lv2 in case it is not installed
 sudo yum install -y lvm2
