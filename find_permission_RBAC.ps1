@@ -1,0 +1,1 @@
+﻿Get-AzureRmProviderOperation * | select Operation,Description | where operation -Like *tag* 
