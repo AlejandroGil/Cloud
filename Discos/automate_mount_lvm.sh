@@ -1,6 +1,6 @@
 #!/bin/bash
 #get device to mount
-physical_device=$(sudo grep SCSI /var/log/syslog | tail -1 | grep -i attached | awk '{print $10}' | tr -d [])
+physical_device=$(sudo grep SCSI /var/log/syslog | grep -i attached | tail -1 | awk '{print $10}' | tr -d [])
 
 #install lv2 in case it is not installed
 sudo apt-get install -y lvm2
