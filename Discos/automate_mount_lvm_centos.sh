@@ -11,5 +11,5 @@ sudo lvcreate -l 100%FREE -n lv1 vg1
 sudo mkfs.ext4 /dev/vg1/lv1
 sudo mkdir /datadrive
 sudo mount /dev/mapper/vg1-lv1 /datadrive/
-fstab="/dev/mapper/vg1-lv1 /datadrive ext4 defaults 0 0"
+fstab="/dev/mapper/vg1-lv1 /datadrive ext4 defaults,nofail 0 0"
 echo "$fstab" | sudo tee --append /etc/fstab
